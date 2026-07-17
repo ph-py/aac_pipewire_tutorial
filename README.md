@@ -36,7 +36,7 @@ Install the necessary tools to compile software and the specific AAC development
 ```bash
 sudo apt install build-essential devscripts
 sudo apt build-dep pipewire
-sudo apt install libfdk-aac-dev
+sudo apt install libfdk-aac2t64 libfdk-aac-dev
 ```
 
 Confirm the runtime library is installed:
