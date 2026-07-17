@@ -71,7 +71,7 @@ sudo apt update
 ```bash
 sudo apt install build-essential devscripts
 sudo apt build-dep pipewire
-sudo apt install libfdk-aac-dev
+sudo apt install libfdk-aac2t64 libfdk-aac-dev
 ```
 
 A biblioteca `libfdk-aac-dev` é necessária **para compilar** o plugin com AAC.
