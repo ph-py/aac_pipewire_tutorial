@@ -24,8 +24,6 @@ sudo nano /etc/apt/sources.list
 Add these lines (adjust if you use different mirrors):
 ```text
 deb-src http://deb.debian.org/debian/ trixie main contrib non-free non-free-firmware
-deb-src http://security.debian.org/debian-security trixie-security main contrib non-free non-free-firmware
-deb-src http://deb.debian.org/debian/ trixie-updates main contrib non-free non-free-firmware
 ```
 
 Update your package index:
@@ -94,19 +92,6 @@ sudo dpkg -i libspa-0.2-bluetooth_1.4.2*.deb
 Restart the user audio services for the changes to take effect:
 ```bash
 systemctl --user restart wireplumber pipewire pipewire-pulse
-```
-
-#### 9. Select and Verify AAC
-Check if AAC is now available:
-```bash
-pactl list cards | grep a2dp-sink-aac
-```
-
-You can now select the AAC profile in **GNOME Settings > Sound** or via **Pavucontrol**. To verify the active codec:
-```bash
-wpctl status
-# Identify your Bluetooth sink ID (e.g., 106)
-wpctl inspect 106 | grep -i codec
 ```
 
 ---
