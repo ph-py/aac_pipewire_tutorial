@@ -58,8 +58,6 @@ Adicione estas linhas — ajuste somente se sua instalação usar outro espelho 
 
 ```text
 deb-src http://deb.debian.org/debian/ trixie main contrib non-free non-free-firmware
-deb-src http://security.debian.org/debian-security trixie-security main contrib non-free non-free-firmware
-deb-src http://deb.debian.org/debian/ trixie-updates main contrib non-free non-free-firmware
 ```
 
 Atualize o índice de pacotes:
@@ -243,52 +241,12 @@ O resultado deve incluir:
 a2dp-sink-aac: High Fidelity Playback (A2DP Sink, codec AAC)
 ```
 
-Para ativar por terminal, adapte o endereço Bluetooth ao seu dispositivo:
-
-```bash
-pactl set-card-profile bluez_card.F3_38_8C_32_01_E8 a2dp-sink-aac
-```
-
-Para descobrir o nome exato do card:
-
-```bash
-pactl list cards short
-```
-
 Você também pode selecionar pelo GNOME:
 
 1. Abra **Configurações → Som**;
 2. selecione seu fone Bluetooth;
 3. escolha **High Fidelity Playback (A2DP Sink, codec AAC)**.
 
-Ou pelo `pavucontrol`:
-
-```bash
-pavucontrol
-```
-
-Na aba **Configuração**, selecione o perfil AAC.
-
-#### 10. Confirme o codec ativo
-
-Use:
-
-```bash
-wpctl status
-```
-
-Encontre o ID do sink Bluetooth e inspecione-o. Exemplo:
-
-```bash
-wpctl inspect 106 | grep -iE 'codec|profile|bluez'
-```
-
-O resultado desejado é semelhante a:
-
-```text
-api.bluez5.codec = "aac"
-api.bluez5.profile = "a2dp-sink"
-```
 
 ### Evitando que uma atualização substitua o pacote
 
@@ -321,57 +279,12 @@ libspa-0.2-bluetooth
 libfdk-aac2t64
 ```
 
-Também vale manter, embora sejam opcionais:
-
-```text
-pulseaudio-utils
-pavucontrol
-```
-
-- `pulseaudio-utils` fornece o comando `pactl`, útil para verificar e trocar perfis.
-- `pavucontrol` oferece uma interface gráfica mais detalhada para áudio e perfis Bluetooth.
-
 ### O que pode remover após concluir
 
 Ferramentas usadas apenas para compilar podem ser removidas:
 
 ```bash
-sudo apt remove libfdk-aac-dev devscripts build-essential
-```
-
-Antes de confirmar, faça uma simulação:
-
-```bash
-sudo apt remove --simulate libfdk-aac-dev devscripts build-essential
-```
-
-**Cancele** se o APT sugerir remover `libfdk-aac2t64` ou `libspa-0.2-bluetooth`.
-
-Depois, você pode verificar dependências órfãs:
-
-```bash
-sudo apt autoremove --simulate
-```
-
-Se a lista fizer sentido:
-
-```bash
-sudo apt autoremove
-```
-
-### Preserve o pacote recompilado
-
-Antes de apagar a pasta de compilação, guarde o `.deb` gerado:
-
-```bash
-mkdir -p ~/pacotes-personalizados
-cp ~/pipewire-aac/libspa-0.2-bluetooth_*.deb ~/pacotes-personalizados/
-```
-
-Se precisar reinstalá-lo:
-
-```bash
-sudo dpkg -i ~/pacotes-personalizados/libspa-0.2-bluetooth_*.deb
+sudo apt remove libfdk-aac-dev devscripts build-essential pulseaudio-utils pavucontrol
 ```
 
 A referência técnica para o procedimento original é o artigo [AAC and Debian, de Tookmund](https://tookmund.com/2024/02/aac-and-debian).
